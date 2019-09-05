@@ -1,0 +1,2 @@
+# algorithm
+solve the problem👿
