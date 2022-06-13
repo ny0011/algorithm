@@ -17,3 +17,7 @@ solve the problem👿
 42888. 오픈채팅방
 
 - https://programmers.co.kr/learn/courses/30/lessons/42888
+
+62048. 멀쩡한 사각형
+
+- https://programmers.co.kr/learn/courses/30/lessons/62048
