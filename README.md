@@ -21,3 +21,7 @@ solve the problem👿
 62048. 멀쩡한 사각형
 
 - https://programmers.co.kr/learn/courses/30/lessons/62048
+
+42626. 더 맵게
+
+- https://programmers.co.kr/learn/courses/30/lessons/42626
