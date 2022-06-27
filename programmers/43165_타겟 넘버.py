@@ -1,13 +1,24 @@
-def operator(idx, numbers, target, answer):
-        if idx < len(numbers):
-            numbers[idx] *= 1
-            operator(idx+1, numbers, target, answer)            
-            numbers[idx] *= -1
-            operator(idx+1, numbers, target, answer)  
-        elif sum(numbers) == target:            
-            answer.append(1)
-            
+def create_list(numbers):
+    new = list()
+    idx = 0
+    while idx < len(numbers):
+        if len(new) == 0:
+            number = numbers[idx]
+            new.append(number)
+            new.append(-number)
+            idx += 1
+            continue
+        length = len(new)
+        tmp = list()
+        number = numbers[idx]
+        for i in range(length):
+            tmp.append(new[i]+number)
+        for i in range(length):
+            tmp.append(new[i]-number)
+        new = tmp
+        idx += 1 
+    return new
+    
 def solution(numbers, target):
-    answer = list()
-    operator(0, numbers, target, answer)
-    return len(answer)
+    sum_list = create_list(numbers)
+    return sum_list.count(target)
