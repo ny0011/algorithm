@@ -4,30 +4,22 @@ def is_right_string(p):
         if s == "(":
             stack.append(s)
         else:
-            if len(stack) == 0:
-                return False
+            if len(stack) == 0: return False
             stack.pop()
-    if len(stack) == 0:
-        return True
+    if len(stack) == 0: return True
     return False
 
 
 def divide_string(p):
     u = ""
     v = ""
-    open_count = 0
-    close_count = 0
+    count = 0
     for s in p:
-        u+=s
-        if s == "(":
-            open_count+=1
-        else:
-            close_count+=1       
-        if open_count == close_count:
-            break
-    if open_count + close_count < len(p):
-        u_length = open_count + close_count
-        v = p[u_length:]
+        u += s
+        if s == "("   : count+=1
+        else      : count-=1       
+        if count == 0 : break
+    v = p[len(u):]
     return u, v
 
 def convert_right_string(p): 
@@ -35,6 +27,7 @@ def convert_right_string(p):
         return p
     
     u, v = divide_string(p)
+    
     if is_right_string(u):
         substring = convert_right_string(v)
         return u+substring 
