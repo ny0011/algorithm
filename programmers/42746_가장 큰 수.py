@@ -8,13 +8,12 @@ def sort_max_num(x, y):
     elif _x[0] < _y[0]:
         return -1
     else:
-        if len(_x) > len(_y):
-          _y = _y + _y[0]*(len(_x)-len(_y))
-        elif len(_x) < len(_y):
-          _x = _x + _x[0]*(len(_y)-len(_x))
-        if _x == _y:
-          return len(x) - len(y)
-        return int(_x) - int(_y)
+        if int(x+y) > int(y+x):
+            return 1
+        elif int(x+y) < int(y+x):
+            return -1
+        else: 
+            return 0
         
 def solution(numbers):
     answer = ''
