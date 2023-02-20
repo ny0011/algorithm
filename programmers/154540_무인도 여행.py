@@ -1,21 +1,20 @@
-from collections import deque
+from collections import deque, defaultdict
 
 def bfs(adj, node, visited, weight, answer):
-    a, b = node
     q = deque([node])
-    visited[a][b] = True
-    count = weight.pop((a,b))
+    visited[node] = True
+    count = weight.pop(node)
     while q:
-        x, y = q.popleft()
-        for i, j in adj[x][y]:
-            if not visited[i][j]:
-                q.append((i,j))
-                visited[i][j] = True
-                count += weight.pop((i,j))
+        new_node = q.popleft()
+        for _node in adj[new_node]:
+            if not visited[_node]:
+                q.append(_node)
+                visited[_node] = True
+                count += weight.pop(_node)
     answer.append(count)
 
 def create_adj(maps):  
-    adj = [[[] for j in range(len(maps[0]))] for i in range(len(maps))]
+    adj = defaultdict(list)
     dx = [0,0,-1,1]
     dy = [-1,1,0,0]
     
@@ -25,7 +24,7 @@ def create_adj(maps):
                 for k in range(len(dx)):
                     if i+dx[k] >= 0 and j+dy[k] >=0 and i+dx[k] < len(maps) and j+dy[k] < len(maps[0]) :
                         if maps[i+dx[k]][j+dy[k]] != "X" :
-                            adj[i][j].append((i+dx[k],j+dy[k]))
+                            adj[(i,j)].append((i+dx[k],j+dy[k]))
     return adj
 
 def create_weight(maps):
@@ -38,7 +37,10 @@ def create_weight(maps):
 
 def solution(maps):
     answer = []
-    visited = [ [False for j in range(len(maps[0]))] for i in range(len(maps)) ]
+    visited = dict()
+    for i in range(len(maps)):
+        for j in range(len(maps[0])):
+            visited[(i,j)] = False
     adj = create_adj(maps)
     weight = create_weight(maps)
     if len(weight) == 0:
