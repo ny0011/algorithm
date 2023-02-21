@@ -1,17 +1,29 @@
 from collections import deque, defaultdict
+import sys
+sys.setrecursionlimit(10001)
 
 def bfs(adj, node, visited, weight, answer):
     q = deque([node])
     visited[node] = True
     count = weight.pop(node)
     while q:
-        new_node = q.popleft()
-        for _node in adj[new_node]:
+        current_node = q.popleft()
+        for _node in adj[current_node]:
             if not visited[_node]:
                 q.append(_node)
                 visited[_node] = True
                 count += weight.pop(_node)
     answer.append(count)
+
+def dfs(adj, node, visited, weight, answer, i):
+    stack = [node]
+    visited[node] = True
+    answer[i].append(weight.pop(node))
+    for current_node in adj[node]:
+        if not visited[current_node]:
+            dfs(adj, current_node, visited, weight, answer, i)
+            
+
 
 def create_adj(maps):  
     adj = defaultdict(list)
@@ -46,8 +58,16 @@ def solution(maps):
     if len(weight) == 0:
         return [-1]
     
+    i = 0
     while weight:
         node = list(weight.keys())[0]
-        bfs(adj, node, visited, weight, answer)
-    
-    return sorted(answer)
+        answer.append([])
+        #bfs(adj, node, visited, weight, answer)
+        dfs(adj, node, visited, weight, answer, i)
+        i+= 1
+    ret = []
+    for _list in answer:
+        ret.append(sum(_list))
+    return sorted(ret)
+
+solution(["X591X","X1X5X","X231X", "1XXX1"])
