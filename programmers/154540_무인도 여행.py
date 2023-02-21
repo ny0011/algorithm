@@ -1,5 +1,36 @@
-from collections import deque, defaultdict
+from collections import deque
+
+def solution(maps):
+    N, M = len(maps), len(maps[0])
+    visited = [[False]*M for _ in range(N)]
+
+    answer = []
+    for i in range(N):
+        for j in range(M):
+            if maps[i][j]=='X' or visited[i][j]:
+                continue
+            queue = deque()
+            queue.append((i,j))
+            visited[i][j]=True
+            n_food = int(maps[i][j])
+            while queue:
+                i0, j0 = queue.popleft()
+                for di, dj in [(1,0), (0,1), (-1,0), (0,-1)]:
+                    ni, nj = i0+di, j0+dj
+                    if 0<=ni<N and 0<=nj<M and not visited[ni][nj] and maps[ni][nj]!='X':
+                        queue.append((ni,nj))
+                        visited[ni][nj] = True
+                        n_food += int(maps[ni][nj])
+            answer.append(n_food)
+    if not answer:
+        answer.append(-1)
+    else:
+        answer.sort()
+    return answer
+'''
+
 import sys
+from collections import deque, defaultdict
 sys.setrecursionlimit(10001)
 
 def bfs(adj, node, visited, weight, answer):
@@ -70,4 +101,4 @@ def solution(maps):
         ret.append(sum(_list))
     return sorted(ret)
 
-solution(["X591X","X1X5X","X231X", "1XXX1"])
+'''
